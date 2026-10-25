@@ -1,0 +1,117 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and academic settings",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 200 },
+        "course": { "type": "string", "maxLength": 100 },
+        "semester": { "type": "string", "maxLength": 50 },
+        "theme": { "type": "string", "enum": ["light", "dark", "system"] },
+        "defaultReminderMinutes": { "type": "number" },
+        "browserNotificationsEnabled": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["email", "displayName"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Academic courses/subjects",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "subjectCode": { "type": "string", "maxLength": 30 },
+        "semester": { "type": "string", "maxLength": 50 },
+        "color": { "type": "string", "maxLength": 30 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "subjectCode", "userId"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Academic assignments, labs, projects, quizzes, and deliverables",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "taskType": { "type": "string", "enum": ["Assignment", "Practical", "Lab Work", "Project", "Quiz", "Reading", "Other"] },
+        "dueAt": { "type": "string", "maxLength": 50 },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High"] },
+        "status": { "type": "string", "enum": ["Pending", "In Progress", "Completed"] },
+        "reminderMinutesBefore": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "completedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["title", "userId", "dueAt", "priority", "status"]
+    },
+    "Exam": {
+      "title": "Exam",
+      "description": "Midterm, final, and practical exams",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "examType": { "type": "string", "enum": ["Midterm", "Final", "Quiz", "Practical", "Oral", "Other"] },
+        "examAt": { "type": "string", "maxLength": 50 },
+        "venue": { "type": "string", "maxLength": 100 },
+        "notes": { "type": "string", "maxLength": 3000 },
+        "reminderMinutesBefore": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "userId", "examAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app notifications and alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "message": { "type": "string", "maxLength": 1000 },
+        "type": { "type": "string", "enum": ["reminder", "overdue", "exam", "system"] },
+        "isRead": { "type": "boolean" },
+        "linkId": { "type": "string", "maxLength": 128 },
+        "linkType": { "type": "string", "enum": ["task", "exam", "general"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "userId", "isRead"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile and academic preferences"
+    },
+    "/users/{userId}/subjects/{subjectId}": {
+      "schema": "Subject",
+      "description": "Academic course subjects for a user"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Academic tasks and deliverables for a user"
+    },
+    "/users/{userId}/exams/{examId}": {
+      "schema": "Exam",
+      "description": "Academic exams and schedules for a user"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User reminder notifications and alerts"
+    }
+  }
+}

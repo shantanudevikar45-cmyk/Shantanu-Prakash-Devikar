@@ -1,0 +1,6 @@
+{
+  "name": "Taskora — Smart Assignment Deadline Manager",
+  "description": "A precision academic productivity application and deadline manager for college students with interactive dashboards, task tracking, exam planners, subject management, and persistent cloud sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
